@@ -39,8 +39,8 @@ def store_user_data():
     user_data[uid]["Lean"] = float(data["Lean"])
     user_data[uid]["Pitch"] = float(data["Pitch"])
     user_data[uid]["Yaw"] = float(data["Yaw"])
-    user_data[uid]["Longitude"] = str(data["Longitude"])
-    user_data[uid]["Latitude"] = str(data["Latitude"])
+    user_data[uid]["Longitude"] = float(data["Longitude"])
+    user_data[uid]["Latitude"] = float(data["Latitude"])
 
 
     # Predict
@@ -65,4 +65,4 @@ def get_user_data():
     return user_data[uid]
 
 
-app.run(debug=True)
+app.run(debug=True, port=8080)

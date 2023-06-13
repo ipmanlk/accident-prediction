@@ -53,8 +53,18 @@ def store_user_data():
 
     prediction = model.predict(X)
     label_encoder = get_label_encoder()
+    
     predicted_category = label_encoder.inverse_transform(prediction)[0]
+    
     user_data[uid]["Status"] = predicted_category
+
+    if predicted_category == "Crashed":
+        # send sms to guardian
+        print("Sending SMS to guardian")
+
+        # send sms to emergency services
+        print("Sending SMS to emergency services")
+
 
     return user_data[uid]
 

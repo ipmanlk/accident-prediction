@@ -2,6 +2,8 @@ from flask import Flask, jsonify, request
 import pickle
 import pandas as pd
 from pathlib import Path
+from mail import send_email
+from maps import get_nearest_hospital, get_google_maps_url
 
 from generate_model import  generate_model, get_label_encoder
 
@@ -58,10 +60,25 @@ def store_user_data():
     
     user_data[uid]["Status"] = predicted_category
 
+    print(f"Predicted category: {predicted_category}")
+
     if predicted_category == "Crashed":
+        # get nearest hospital
+        print("Getting nearest hospital")
+        name, phone, address = get_nearest_hospital(longitude=user_data[uid]["Longitude"], latitude=user_data[uid]["Latitude"])
+        print(name, phone, address)
+
+        # Crash Location
+        maps_url = get_google_maps_url(latitude=user_data[uid]["Latitude"], longitude=user_data[uid]["Longitude"])
+
+        # Prepare message body with hospital details and location of crash
+        message_body = f"Your loved one has crashed!\n\nHospital: {name}\nContact: {phone}\nAddress: {address}\n\nLocation: {maps_url}"
+        
         # send sms to guardian
         print("Sending SMS to guardian")
-
+        send_email(receiver_email="ict18820@sjp.ac.lk", subject="Your loved one has crashed", body=message_body)
+        send_email(receiver_email="navinda@yandex.com", subject="Your loved one has crashed", body=message_body)
+        
         # send sms to emergency services
         print("Sending SMS to emergency services")
 

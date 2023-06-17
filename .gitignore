@@ -6,3 +6,4 @@ models/*
 !models/.gitkeep
 __pycache__
 env
+.env

@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 import pickle
 from pathlib import Path
 from sklearn.preprocessing import LabelEncoder
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
 
 DATASET_PATH = Path(__file__).parent / "csv" / "dataset.csv"
 MODEL_PATH = Path(__file__).parent / "models" / "model.pkl"
@@ -25,8 +25,8 @@ def generate_model():
   # Split the dataset into training and testing sets
   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-  # Train the DecisionTreeClassifier
-  classifier = DecisionTreeClassifier()
+  # Train the model
+  classifier = LogisticRegression()
   classifier.fit(X_train, y_train)
 
   # Export the trained model as a pickle file

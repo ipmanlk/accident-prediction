@@ -1,6 +1,6 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
 from pathlib import Path
 import os
 import pickle
@@ -17,7 +17,7 @@ def generate_model():
   y = data['Status']
   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-  model = DecisionTreeClassifier()
+  model = RandomForestClassifier()
   model.fit(X_train, y_train)
 
   # Export the trained model as a pickle file

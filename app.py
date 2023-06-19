@@ -4,8 +4,7 @@ import pandas as pd
 from pathlib import Path
 from mail import send_email
 from maps import get_nearest_hospital, get_google_maps_url
-
-from generate_model import  generate_model, get_label_encoder
+from generate_model import  generate_model
 
 # paths
 MODELS_DIR = Path(__file__).parent / "models"
@@ -54,9 +53,7 @@ def store_user_data():
     })
 
     prediction = model.predict(X)
-    label_encoder = get_label_encoder()
-    
-    predicted_category = label_encoder.inverse_transform(prediction)[0]
+    predicted_category = prediction[0]
     
     user_data[uid]["Status"] = predicted_category
 
